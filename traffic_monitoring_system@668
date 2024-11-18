@@ -1,0 +1,417 @@
+#include <bits/stdc++.h>
+#include <chrono>
+#include <thread>
+#include <string>
+#include <vector>
+#include <cstdlib>
+using namespace std;
+class TrafficCamera {
+public:
+    TrafficCamera(const string& location) : location(location), vehiclesDetected(0), averageSpeed(0) {}
+    void monitorTraffic() {
+        vehiclesDetected = rand() % 100;
+        averageSpeed = rand() % 80 + 20;
+        cout << "Camera at " << location << " is monitoring traffic..." << endl;
+        cout << "Vehicles detected: " << vehiclesDetected << ", Average speed: " << averageSpeed << " km/h" << endl;
+        this_thread::sleep_for(chrono::seconds(2));
+    }
+    bool detectAccident() {
+        return rand() % 10 < 2;
+    }
+    void alertAuthorities(const string& incidentDetails) {
+        cout << "ALERT: " << incidentDetails << " at " << location << "!" << endl;
+    }
+    string getLocation() const {
+        return location;
+    }
+private:
+    string location;
+    int vehiclesDetected;
+    int averageSpeed;
+};
+class TrafficMonitoringSystem {
+public:
+    void addCamera(const string& location) {
+        cameras.emplace_back(location);
+    }
+
+    void startMonitoring() {
+        cout << "Starting traffic monitoring system..." << endl;
+        while (true) {
+            for (auto& camera : cameras) {
+                camera.monitorTraffic();
+                if (camera.detectAccident()) {
+                    camera.alertAuthorities("Accident detected");
+                } else {
+                    cout << "No incidents detected at " << camera.getLocation() << "." << endl;
+                }
+            }
+            cout << "Monitoring cycle complete. Restarting..." << endl;
+            this_thread::sleep_for(chrono::seconds(5));
+        }
+    }
+
+private:
+    vector<TrafficCamera> cameras;
+};
+
+class SmartTrafficManagementSystem {
+public:
+    void welcome() {
+        while (true) {
+            clearScreen();
+            displayWelcomeMessage();
+            int choice;
+            if (!(cin >> choice)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Enter a valid option!" << endl;
+                delay(1);
+                continue;
+            }
+
+            switch (choice) {
+                case 1:
+                    displayVehicleRecords();
+                    break;
+                case 2:
+                    displayChallanRecords();
+                    break;
+                case 3:
+                    vehSearch();
+                    break;
+                case 4:
+                    trafContBooth();
+                    break;
+                case 5:
+                    controlTraffic();
+                    break;
+                case 6:
+                    helpInfo();
+                    break;
+                default:
+                    cout << "Enter a valid option!" << endl;
+                    delay(1);
+                    break;
+            }
+        }
+    }
+
+private:
+    void delay(int seconds) {
+        this_thread::sleep_for(chrono::seconds(seconds));
+    }
+
+    void clearScreen() {
+#ifdef _WIN32
+        system("cls");
+#else
+        system("clear");
+#endif
+    }
+
+    void displayWelcomeMessage() {
+        cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" << endl;
+        cout << "'                                                          WELCOME TO                                                             '" << endl;
+        cout << "'                                                SMART TRAFFIC MANAGEMENT SYSTEM                                                  '" << endl;
+        cout << "'                   Press Your Option :-                                                                                          '" << endl;
+        cout << "'                                    1. Record of Vehicles                                                                         '" << endl;
+        cout << "'                                    2. Record of Challan                                                                          '" << endl;
+        cout << "'                                    3. Search the Record of Vehicles                                                              '" << endl;
+        cout << "'                                    4. Traffic Control Booths                                                                     '" << endl;
+        cout << "'                                    5. Control the Traffic                                                                        '" << endl;
+        cout << "'                                    6. Help !                                                                                     '" << endl;
+        cout << "'                   Enter your choice __                                                                                          '" << endl;
+        cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" << endl;
+    }
+
+    void displayVehicleRecords() {
+        clearScreen();
+        cout << "Record of Vehicles:\n" << endl;
+
+        cout << "Toyota Corolla - Sedan, 2021, White\nRegistration Number: ABC1234\nOwner: Aashutosh K. Das\n" << endl;
+        cout << "Honda Civic - Sedan, 2020, Black\nRegistration Number: XYZ5678\nOwner: Nikhil K. Sah\n" << endl;
+
+        cout << "Maruti Suzuki Swift - Hatchback, 2021, White\nRegistration Number: IND001\nOwner: Rajesh Kumar\n" << endl;
+        cout << "Hyundai Creta - SUV, 2020, Silver\nRegistration Number: IND002\nOwner: Priya Mehta\n" << endl;
+        cout << "Tata Nexon - SUV, 2022, Blue\nRegistration Number: IND003\nOwner: Ramesh Singh\n" << endl;
+        cout << "Mahindra Thar - SUV, 2021, Black\nRegistration Number: IND004\nOwner: Anita Patel\n" << endl;
+        cout << "Honda City - Sedan, 2019, Grey\nRegistration Number: IND005\nOwner: Vikram Sharma\n" << endl;
+        cout << "Kia Seltos - SUV, 2021, Red\nRegistration Number: IND006\nOwner: Sanya Kapoor\n" << endl;
+        cout << "Toyota Fortuner - SUV, 2022, White\nRegistration Number: IND007\nOwner: Arjun Verma\n" << endl;
+        cout << "Hyundai i20 - Hatchback, 2020, Black\nRegistration Number: IND008\nOwner: Shruti Iyer\n" << endl;
+        cout << "Tata Altroz - Hatchback, 2022, Gold\nRegistration Number: IND009\nOwner: Devansh Tripathi\n" << endl;
+        cout << "Maruti Suzuki Baleno - Hatchback, 2019, Blue\nRegistration Number: IND010\nOwner: Manish Gupta\n" << endl;
+
+        delay(3);
+    }
+
+    void displayChallanRecords() {
+        clearScreen();
+        cout << "Select City for Challan Records:" << endl;
+        cout << "1. Jalandhar\n2. Amritsar\n3. Chandigarh\n4. Delhi\n5. Vijayawada\n6. Mangalagiri\nEnter your choice: ";
+        int choice;
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                showCityChallanRecords("Jalandhar");
+                break;
+            case 2:
+                showCityChallanRecords("Amritsar");
+                break;
+            case 3:
+                showCityChallanRecords("Chandigarh");
+                break;
+            case 4:
+                showCityChallanRecords("Delhi");
+                break;
+            case 5:
+                showCityChallanRecords("Vijayawada");
+                break;
+            case 6:
+                showCityChallanRecords("Mangalagiri");
+                break;
+            default:
+                cout << "Invalid choice!" << endl;
+                delay(2);
+        }
+    }
+
+   void showCityChallanRecords(const string& city) {
+        clearScreen();
+        cout << "Challan Records in " << city << ":\n" << endl;
+
+        if (city == "Jalandhar") {
+            cout << "Vehicle: Toyota Corolla\nChallan Number: CHL001234\nDate of Issue: October 5, 2024\nViolation: Speeding\nFine Amount: ₹500\n" << endl;
+            cout << "Vehicle: Honda Civic\nChallan Number: CHL002345\nDate of Issue: October 7, 2024\nViolation: Illegal Parking\nFine Amount: ₹300\n" << endl;
+            cout << "Vehicle: Ford F-150\nChallan Number: CHL003456\nDate of Issue: October 10, 2024\nViolation: Not wearing seatbelt\nFine Amount: ₹500\n" << endl;
+            cout << "Vehicle: Chevrolet Malibu\nChallan Number: CHL004567\nDate of Issue: October 12, 2024\nViolation: Wrong side driving\nFine Amount: ₹700\n" << endl;
+        } else if (city == "Amritsar") {
+            cout << "Vehicle: Honda Accord\nChallan Number: AMR001234\nDate of Issue: October 3, 2024\nViolation: Speeding\nFine Amount: ₹500\n" << endl;
+            cout << "Vehicle: Maruti Suzuki Swift\nChallan Number: AMR002345\nDate of Issue: October 5, 2024\nViolation: Illegal Parking\nFine Amount: ₹300\n" << endl;
+            cout << "Vehicle: Hyundai Creta\nChallan Number: AMR003456\nDate of Issue: October 8, 2024\nViolation: Not wearing seatbelt\nFine Amount: ₹500\n" << endl;
+            cout << "Vehicle: Chevrolet Cruze\nChallan Number: AMR004567\nDate of Issue: October 12, 2024\nViolation: Wrong side driving\nFine Amount: ₹700\n" << endl;
+        } else if (city == "Chandigarh") {
+            cout << "Vehicle: Honda City\nChallan Number: CHD001234\nDate of Issue: October 4, 2024\nViolation: Speeding\nFine Amount: ₹500\n" << endl;
+            cout << "Vehicle: Toyota Fortuner\nChallan Number: CHD002345\nDate of Issue: October 6, 2024\nViolation: Illegal Parking\nFine Amount: ₹300\n" << endl;
+            cout << "Vehicle: BMW 5 Series\nChallan Number: CHD003456\nDate of Issue: October 10, 2024\nViolation: Not wearing seatbelt\nFine Amount: ₹500\n" << endl;
+            cout << "Vehicle: Audi A4\nChallan Number: CHD004567\nDate of Issue: October 12, 2024\nViolation: Wrong side driving\nFine Amount: ₹700\n" << endl;
+        } else if (city == "Delhi") {
+            cout << "Vehicle: Mahindra Thar\nChallan Number: DL001234\nDate of Issue: October 8, 2024\nViolation: Speeding\nFine Amount: ₹700\n" << endl;
+            cout << "Vehicle: Tata Nexon\nChallan Number: DL002345\nDate of Issue: October 10, 2024\nViolation: Illegal Parking\nFine Amount: ₹500\n" << endl;
+            cout << "Vehicle: Kia Seltos\nChallan Number: DL003456\nDate of Issue: October 12, 2024\nViolation: Not wearing seatbelt\nFine Amount: ₹300\n" << endl;
+            cout << "Vehicle: Maruti Baleno\nChallan Number: DL004567\nDate of Issue: October 15, 2024\nViolation: Jumping red light\nFine Amount: ₹600\n" << endl;
+        } else if (city == "Vijayawada") {
+            cout << "Vehicle: Hyundai Verna\nChallan Number: VJA001234\nDate of Issue: October 8, 2024\nViolation: Speeding\nFine Amount: ₹500\n" << endl;
+            cout << "Vehicle: Renault Kwid\nChallan Number: VJA002345\nDate of Issue: October 9, 2024\nViolation: Illegal Parking\nFine Amount: ₹200\n" << endl;
+            cout << "Vehicle: Tata Altroz\nChallan Number: VJA003456\nDate of Issue: October 10, 2024\nViolation: Not wearing seatbelt\nFine Amount: ₹500\n" << endl;
+            cout << "Vehicle: Honda Amaze\nChallan Number: VJA004567\nDate of Issue: October 12, 2024\nViolation: Wrong side driving\nFine Amount: ₹700\n" << endl;
+        } else if (city == "Mangalagiri") {
+            cout << "Vehicle: Skoda Superb\nChallan Number: MGL001234\nDate of Issue: October 6, 2024\nViolation: Speeding\nFine Amount: ₹600\n" << endl;
+            cout << "Vehicle: Ford Ecosport\nChallan Number: MGL002345\nDate of Issue: October 9, 2024\nViolation: Illegal Parking\nFine Amount: ₹300\n" << endl;
+            cout << "Vehicle: Nissan Magnite\nChallan Number: MGL003456\nDate of Issue: October 11, 2024\nViolation: Not wearing seatbelt\nFine Amount: ₹400\n" << endl;
+            cout << "Vehicle: Toyota Camry\nChallan Number: MGL004567\nDate of Issue: October 14, 2024\nViolation: Wrong side driving\nFine Amount: ₹750\n" << endl;
+        }
+        delay(3);
+    }
+    void vehSearch() {
+        clearScreen();
+        cout << "Enter Vehicle Registration Number to Search: ";
+        string regNumber;
+        cin >> regNumber;
+        cout << "Searching records for vehicle registration number: " << regNumber << "...\n" << endl;
+        cout << "Vehicle Found:\nToyota Corolla - Sedan, 2021, White\nOwner: Bhupendra \nChallans: 1\nTotal Fine: ₹500\n" << endl;
+        delay(3);
+    }
+
+    void trafContBooth() {
+        clearScreen();
+        cout << "Select City to Display Traffic Control Booths:" << endl;
+        cout << "1. Jalandhar\n2. Amritsar\n3. Chandigarh\n4. Delhi\n5. Vijayawada\n6. Mangalagiri\nEnter your choice: ";
+        int choice;
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                showBoothsInCity("Jalandhar");
+                break;
+            case 2:
+                showBoothsInCity("Amritsar");
+                break;
+            case 3:
+                showBoothsInCity("Chandigarh");
+                break;
+            case 4:
+                showBoothsInCity("Delhi");
+                break;
+            case 5:
+                showBoothsInCity("Vijayawada");
+                break;
+            case 6:
+                showBoothsInCity("Mangalagiri");
+                break;
+            default:
+                cout << "Invalid choice!" << endl;
+                delay(2);
+        }
+    }
+
+    void showBoothsInCity(const string& city) {
+        clearScreen();
+        cout << "Traffic Control Booths in " << city << ":\n" << endl;
+        if (city == "Jalandhar") {
+            cout << "Guru Nanak Mission Chowk - Head: Inspector Rajesh Singh\n"
+                 << "Model Town Market - Head: Inspector Amrit Kaur\n"
+                 << "Jyoti Chowk - Head: Inspector Mohan Preet\n"
+                 << "... [add other locations]\n";
+        } else if (city == "Amritsar") {
+            cout << "Golden Temple Entrance - Head: Inspector Harman Singh\n"
+                 << "Amritsar Railway Station - Head: Inspector Randeep Bajwa\n"
+                 << "Hall Bazaar - Head: Inspector Surinderpal Kaur\n"
+                 << "... [add other locations]\n";
+        } else if (city == "Chandigarh") {
+            cout << "Sector 17 Plaza - Head: Inspector Rahul Sharma\n"
+                 << "ISBT Sector 43 - Head: Inspector Seema Kapoor\n"
+                 << "Elante Mall Junction - Head: Inspector Manish Sood\n"
+                 << "... [add other locations]\n";
+        } else if (city == "Delhi") {
+            cout << "Connaught Place - Head: Inspector Ravi Kumar\n"
+                 << "Rajiv Chowk Metro Station - Head: Inspector Neeraj Malhotra\n"
+                 << "Karol Bagh Market - Head: Inspector Priya Shastri\n"
+                 << "... [add other locations]\n";
+        } else if (city == "Vijayawada") {
+            cout << "Benz Circle Junction - Head: Inspector Suresh Babu\n"
+                 << "Eluru Road - Head: Inspector Anitha Reddy\n"
+                 << "Gandhi Hill View Point - Head: Inspector Lakshmi Narayan\n"
+                 << "... [add other locations]\n";
+
+        }
+        delay(5);
+    }
+
+    void controlTraffic() {
+        clearScreen();
+        cout << "Controlling traffic in real-time..." << endl;
+        TrafficMonitoringSystem monitoringSystem;
+        monitoringSystem.addCamera("Main Street");
+        monitoringSystem.addCamera("Central Avenue");
+        monitoringSystem.startMonitoring();
+        delay(3);
+    }
+
+    void helpInfo() {
+        clearScreen();
+        cout << "Smart Traffic Management System Help Info:\n" << endl;
+        cout << "1. **Record of Vehicles**: View details of vehicles including make, model, and owner's name.\n";
+        cout << "2. **Record of Challan**: View challan records based on city selection. See details of fines issued for traffic violations.\n";
+        cout << "3. **Search Vehicle Records**: Search for specific vehicle records by entering the registration number.\n";
+        cout << "4. **Traffic Control Booths**: Displays traffic control booth locations and head officers for different cities.\n";
+        cout << "5. **Control the Traffic**: Activates real-time traffic monitoring with automated accident detection.\n";
+        cout << "6. **Helpline Information And Nearby Hospitals**:\n";
+
+        while (true) {
+            cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" << endl;
+            cout << "*                                             * Helpline Information And Nearby Hospitals *                                           *" << endl;
+            cout << "*                     Press Your Option :-                                                                                            *" << endl;
+            cout << "*                                      1. Helpline Number                                                                             *" << endl;
+            cout << "*                                      2. Hospitals in Jalandhar                                                                      *" << endl;
+            cout << "*                                      3. Hospitals in Amritsar                                                                       *" << endl;
+            cout << "*                                      4. Hospitals in Chandigarh                                                                     *" << endl;
+            cout << "*                                      5. Hospitals in Delhi                                                                          *" << endl;
+            cout << "*                                      6. Hospitals in Vijayawada                                                                     *" << endl;
+            cout << "*                                      7. Hospitals in Mangalagiri                                                                    *" << endl;
+            cout << "*                     Enter 0 For Home                                                                                                *" << endl;
+            cout << "*                     Enter your choice __                                                                                            *" << endl;
+            cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" << endl;
+
+            int choice;
+            cin >> choice;
+            if (choice == 0) break;
+
+            switch (choice) {
+                case 1:
+                    displayHelplineNumbers();
+                    break;
+                case 2:
+                    displayHospitals("Jalandhar");
+                    break;
+                case 3:
+                    displayHospitals("Amritsar");
+                    break;
+                case 4:
+                    displayHospitals("Chandigarh");
+                    break;
+                case 5:
+                    displayHospitals("Delhi");
+                    break;
+                case 6:
+                    displayHospitals("Vijayawada");
+                    break;
+                case 7:
+                    displayHospitals("Mangalagiri");
+                    break;
+                default:
+                    cout << "Invalid choice!" << endl;
+                    delay(1);
+            }
+        }
+    }
+
+    void displayHelplineNumbers() {
+        clearScreen();
+        cout << "Helpline Number: 123456987" << endl;
+        delay(1);
+    }
+
+   void displayHospitals(const string& city) {
+    clearScreen();
+    if (city == "Jalandhar") {
+        cout << "Patel Hospital\nAddress: Civil Lines, Jalandhar, Punjab 144001\nEmergency Contact: +91-181-2457540\nWebsite: patelhospital.com\n";
+        cout << "Shrimann Superspeciality Hospital\nAddress: Nakodar Rd, Jalandhar, Punjab 144026\nEmergency Contact: +91-181-5017777\nWebsite: shrimannhospitals.com\n";
+        cout << "Innocent Hearts Multispeciality Hospital\nAddress: Jalandhar - Nakodar Rd, Adda Khambra, Jalandhar\nEmergency Contact: +91-7527012883\n";
+        cout << "Capitol Hospital\nAddress: Village Randhawa Masanda, Kapurthala Road, Jalandhar\nEmergency Contact: +91-181-2366666\nWebsite: capitolhospital.com\n";
+        cout << "NHS Hospital\nAddress: 28, G.T. Road, Jalandhar, Punjab 144001\nEmergency Contact: +91-181-5087777\nWebsite: nhshospital.in\n";
+    } else if (city == "Amritsar") {
+        cout << "Fortis Escorts Hospital\nAddress: Majitha-Verka Bypass Road, Amritsar, Punjab 143001\nEmergency Contact: +91-183-5005002\nWebsite: fortishealthcare.com\n";
+        cout << "Amandeep Hospital\nAddress: Model Town, GT Road, Amritsar\nEmergency Contact: +91-186-5099100\nWebsite: amandeephospital.org\n";
+        cout << "Healing Touch Hospital\nAddress: Batala Road, Amritsar\nEmergency Contact: +91-183-5000000\nWebsite: healingtouchhospital.org\n";
+        cout << "Kakkar Hospital\nAddress: Opp. Khalsa College, G.T. Road, Amritsar\nEmergency Contact: +91-183-2253001\n";
+        cout << "Sukh Sagar Hospital\nAddress: Lawrence Road, Amritsar\nEmergency Contact: +91-183-2227075\n";
+    } else if (city == "Chandigarh") {
+        cout << "PGIMER (Post Graduate Institute of Medical Education & Research)\nAddress: Sector 12, Chandigarh\nEmergency Contact: +91-172-2747585\nWebsite: pgimer.edu.in\n";
+        cout << "Landmark Hospital\nAddress: Site No I-II, Opp. Terrace Garden, Sector 33, Chandigarh, 160020\nEmergency Contact: +91-172-4027000\nWebsite: landmarkhospital.in\n";
+        cout << "Max Super Speciality Hospital\nAddress: Mohali, Near Chandigarh\nEmergency Contact: +91-172-6652000\nWebsite: maxhealthcare.in\n";
+        cout << "Indus International Hospital\nAddress: Phase I, Mohali\nEmergency Contact: +91-92163-27027\nWebsite: indushospital.in\n";
+    } else if (city == "Delhi") {
+        cout << "AIIMS (All India Institute of Medical Sciences)\nAddress: Ansari Nagar, New Delhi, Delhi 110029\nEmergency Contact: +91-11-26588500\nWebsite: aiims.edu\n";
+        cout << "Fortis Escorts Heart Institute\nAddress: Okhla Road, New Delhi, Delhi 110025\nEmergency Contact: +91-11-47134444\nWebsite: fortishealthcare.com\n";
+        cout << "Sir Ganga Ram Hospital\nAddress: Rajinder Nagar, New Delhi\nEmergency Contact: +91-11-25750000\nWebsite: sgrh.com\n";
+        cout << "BLK Super Speciality Hospital\nAddress: Pusa Road, Delhi\nEmergency Contact: +91-11-30403040\nWebsite: blkhospital.com\n";
+        cout << "Apollo Hospital\nAddress: Mathura Road, Sarita Vihar, New Delhi\nEmergency Contact: +91-11-71791090\nWebsite: apollohospitals.com\n";
+    } else if (city == "Vijayawada") {
+        cout << "Andhra Hospitals\nAddress: Bhavanipuram, Vijayawada, Andhra Pradesh 520012\nEmergency Contact: +91-866-2549777\nWebsite: andhrahospitals.org\n";
+        cout << "Manipal Hospitals Vijayawada\nAddress: MG Road, Vijayawada\nEmergency Contact: +91-866-2465555\nWebsite: manipalhospitals.com\n";
+        cout << "Ramesh Hospitals\nAddress: Ring Road, Labbipet, Vijayawada\nEmergency Contact: +91-866-2463333\nWebsite: rameshhospitals.com\n";
+        cout << "Sentini Hospitals\nAddress: Autonagar, Vijayawada\nEmergency Contact: +91-866-2545444\nWebsite: sentinihospitals.com\n";
+        cout << "Siddhartha Hospital\nAddress: Opp. Maris Stella College, Vijayawada\nEmergency Contact: +91-866-2473344\n";
+    } else if (city == "Mangalagiri") {
+        cout << "AIIMS Mangalagiri\nAddress: Mangalagiri, Andhra Pradesh 522503\nEmergency Contact: +91-863-2383700\nWebsite: aiimsmangalagiri.edu.in\n";
+        cout << "NRI General Hospital\nAddress: Chinna Kakani, Mangalagiri\nEmergency Contact: +91-863-2213641\nWebsite: nrigeneralhospital.com\n";
+        cout << "Sree Lakshmi Narayana Hospital\nAddress: Old NH5 Road, Mangalagiri\nEmergency Contact: +91-863-2230345\n";
+    }
+    delay(3);
+}
+
+};
+
+int main() {
+    SmartTrafficManagementSystem ob1;
+    ob1.welcome();
+    return 0;
+}
+
+
+
+
+
