@@ -42,7 +42,7 @@ The Smart Traffic Management System is a C++ application that simulates real-tim
 <b>Steps</b><br>
 <ol>
 <li>Clone this repository:</li>
-<pre>git clone https://github.com/your-username/traffic-management-system.git
+<pre>git clone (https://github.com/abhishekhkumarjha/real-time_traffic_monitoring_system-abhishekh_kumarjha.git)
 cd traffic-management-system</pre>
 <li>Compile the code:</li>
 <pre>g++ -std=c++17 -o traffic_management main.cpp</pre>
