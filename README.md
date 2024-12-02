@@ -83,22 +83,16 @@ Manages multiple traffic cameras and provides real-time monitoring.<br>
 <h10><b>3. Smart Traffic Management</b></h10><br>
 Main user interface with an interactive menu to access all features.<br>
 <hr style="border: 0.5px solid black;">
-<b><font size="25">Demo</font></b><br>
-<br>
-Screenshots
-<br>
-<ul>
-<li>Main Menu</li>
-<li>Vehicle Records</li>
-<li>Challan Records</li>
-</ul>
-<hr style="border: 0.5px solid black;">
 <h11><b>Contributing</b></h11><br>
 Contributions are welcome! To contribute:<br>
 <ol>
 <li>Fork the repository.</li>
 <li>Create a new branch for your feature/bug fix:</li>
-<pre>git checkout -b feature-name</pre>
+<pre>git checkout -b Vehicle Management Module</pre>
+<pre>git checkout -b Challan Records Module</pre>
+<pre>git checkout -b Traffic Booth Module</pre>
+
+
 <li>Commit your changes:</li>
 <pre>git commit -m "Add new feature"</pre>
 <li>Push to your fork and submit a pull request.</li>
