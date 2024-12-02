@@ -94,12 +94,12 @@ Contributions are welcome! To contribute:<br>
 
 
 <li>Commit your changes:</li>
-<pre>git commit -m "Add new feature"</pre>
-<li>Push to your fork and submit a pull request.</li>
+<pre>git commit -m Help</pre>
+<pre>git commit -m List of Hospitals in 6 Different Cities</pre>
+<pre>git commit -m Serach Option for Records</pre>
 </ol>
 <hr style="border: 0.5px solid black;">
 <h12><b>Acknowledgments</b></h12><br>
 <ul>
-<li>Thanks to all contributors and testers.</li>
-<li>Special thanks to the open-source C++ community for guidance and inspiration.</li>
+<li>Thanks to all Teammates</li>
 </ul>
